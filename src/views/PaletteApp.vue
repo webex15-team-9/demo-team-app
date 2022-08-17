@@ -33,12 +33,11 @@ export default {
     }
   },
   methods: {
-    // マウスの位置に応じて色を変える
     changeColor(e) {
       this.blue = e.offsetX
       this.green = e.offsetY
     },
-    // 色を選んでミニパレットに追加する
+
     pickColor() {
       const newColor = {
         blue: this.blue,
@@ -46,7 +45,7 @@ export default {
       }
       this.colors.push(newColor)
     },
-    // パレットに指定した色を表示する
+
     showColor(color) {
       this.blue = color.blue
       this.green = color.green
