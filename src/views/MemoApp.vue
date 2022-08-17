@@ -1,38 +1,43 @@
 <template>
   <h1>Vue メモ</h1>
   <div class="memo-list">
-    <ul class="memo-list__container">
-      <li class="memo">
-        <div class="memo__checkbox">
+    <ul class="memo-list_container">
+      <li v-for="(memo, index) in memos" v-bind:key="index" class="memo">
+        <div class="memo_checkbox">
           <input type="checkbox" />
         </div>
-        <div class="memo__text">ひき肉を300g買う</div>
-        <button class="memo__delete">削除</button>
-      </li>
-      <li class="memo">
-        <div class="memo__checkbox">
-          <input type="checkbox" />
-        </div>
-        <div class="memo__text">ホウレンソウを1束買う</div>
-        <button class="memo__delete">削除</button>
-      </li>
-      <li class="memo">
-        <div class="memo__checkbox">
-          <input type="checkbox" />
-        </div>
-        <div class="memo__text">ピーマンを2個買う</div>
-        <button class="memo__delete">削除</button>
+        <div class="memo_text">{{ memo.content }}</div>
+        <button class="memo_delete" v-on:click="deleteMemo(index)">削除</button>
       </li>
     </ul>
     <div class="add-memo-field">
-      <input class="add-memo-field__input" type="text" />
-      <button class="add-memo-field__button">追加</button>
+      <input class="add-memo-field_input" type="text" v-model="inputMemo" />
+      <button class="add-memo-field_button" v-on:click="addMemo">追加</button>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      inputMemo: "",
+      memos: [],
+    }
+  },
+  methods: {
+    deleteMemo: function (index) {
+      this.memos.splice(index, 1)
+    },
+    addMemo: function () {
+      if (this.inputMemo !== "") {
+        const memo = { content: this.inputMemo }
+        this.memos.push(memo)
+        this.inputMemo = ""
+      }
+    },
+  },
+}
 </script>
 
 <style scoped>
@@ -47,7 +52,7 @@ export default {}
   margin-right: auto;
 }
 
-.memo-list__container {
+.memo-list_container {
   padding: 0;
 }
 
@@ -64,16 +69,12 @@ export default {}
   background-color: #b23b61;
 }
 
-.memo__text {
+.memo_text {
   margin-left: 2rem;
   text-align: left;
 }
 
-.memo__text--done {
-  text-decoration-line: line-through;
-}
-
-.memo__delete {
+.memo_delete {
   margin-left: 1rem;
   padding: 0.5rem 0.5rem;
   border: solid 1px black;
@@ -81,7 +82,7 @@ export default {}
   background-color: white;
 }
 
-.memo__delete:hover {
+.memo_delete:hover {
   background-color: #b2ae3b;
   border-radius: 5px;
 }
@@ -92,17 +93,20 @@ export default {}
   gap: 0.5rem;
 }
 
-.add-memo-field__input {
-  padding: 10px;
+.add-memo-field_input {
+  height: 5px;
+  padding: 20px;
+  font-size: 15px;
 }
-.add-memo-field__button {
+
+.add-memo-field_button {
   padding: 0.5rem 0.5rem;
   border: solid 1px black;
   border-radius: 5px;
   background-color: white;
 }
 
-.add-memo-field__button:hover {
+.add-memo-field_button:hover {
   background-color: #b2ae3b;
   border-radius: 5px;
 }
