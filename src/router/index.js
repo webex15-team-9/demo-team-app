@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue"
 import MemoApp from "@/views/MemoApp.vue"
 import QuizApp from "@/views/QuizApp.vue"
 import PaletteApp from "@/views/PaletteApp.vue"
+import Original from "@/views/Original.vue"
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: "/palette",
     name: "PaletteApp",
     component: PaletteApp,
+  },
+  {
+    path: "/original",
+    name: "Original",
+    component: Original,
   },
 ]
 
