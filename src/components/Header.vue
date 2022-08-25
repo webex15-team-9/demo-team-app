@@ -17,7 +17,7 @@
         class="navigation__link"
         exact-active-class="navigation__link--exact-active"
         >オリジナルアプリ</router-link
-      >
+      >|
       <router-link
         to="/quiz"
         class="navigation__link"
