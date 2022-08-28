@@ -1,12 +1,16 @@
 <template>
   <h1>Vue メモ</h1>
+
   <div class="memo-list">
+    <button class="checked-memo-delete" v-on:click="deleteCheckedMemo">
+      チェックを入れた項目を全て削除
+    </button>
     <ul class="memo-list_container">
       <li v-for="(memo, index) in memos" v-bind:key="index" class="memo">
-        <div class="memo_checkbox">
-          <input type="checkbox" />
-        </div>
-        <div class="memo_text">{{ memo.content }}</div>
+        <input type="checkbox" v-model="memo.isDone" />
+        <span v-bind:class="{ isDone: memo.isDone }">
+          {{ memo.content }}
+        </span>
         <button class="memo_delete" v-on:click="deleteMemo(index)">削除</button>
       </li>
     </ul>
@@ -23,6 +27,7 @@ export default {
     return {
       inputMemo: "",
       memos: [],
+      isDone: false,
     }
   },
   methods: {
@@ -31,9 +36,21 @@ export default {
     },
     addMemo: function () {
       if (this.inputMemo !== "") {
-        const memo = { content: this.inputMemo }
+        const memo = { content: this.inputMemo, isDone: false }
         this.memos.push(memo)
         this.inputMemo = ""
+      }
+    },
+    deleteCheckedMemo: function () {
+      const remains = []
+      const memos = this.memos
+      const length = memos.length
+      for (let i = 0; i < length; i++) {
+        const memo = memos[i]
+        if (memo.isDone == false) {
+          remains.push(memo)
+        }
+        this.memos = remains
       }
     },
   },
@@ -69,7 +86,13 @@ export default {
   background-color: #b23b61;
 }
 
+.isDone {
+  text-decoration-line: line-through;
+  color: blue;
+}
+
 .memo_text {
+  justify-content: space-between;
   margin-left: 2rem;
   text-align: left;
 }
@@ -109,5 +132,17 @@ export default {
 .add-memo-field_button:hover {
   background-color: #b2ae3b;
   border-radius: 5px;
+}
+
+.checked-memo-delete {
+  margin-bottom: 15px;
+  padding: 0.5rem 0.5rem;
+  border: solid 1px black;
+  border-radius: 5px;
+  background-color: gainsboro;
+}
+
+.checked-memo-delete:hover {
+  background-color: gray;
 }
 </style>
